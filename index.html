@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#0d0d0d"/>
+<title>Sec 3 Hub — Omar Ismail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d0d0d;--bg2:#141414;--bg3:#1c1c1c;--bg4:#252525;
+  --ac:#22d3a0;--ap:#38bdf8;--ao:#a78bfa;--at:#fb923c;--ad:#f472b6;
+  --gc:rgba(34,211,160,.18);--gp:rgba(56,189,248,.18);--go:rgba(167,139,250,.18);--gt:rgba(251,146,60,.18);
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.14);
+  --text:#e8e8e8;--muted:#777;
+  --fd:'Orbitron',monospace;--fb:'Syne',sans-serif;
+  --radius:16px;--radius-sm:10px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100vh;overflow-x:hidden;padding-bottom:calc(70px + var(--safe-bottom))}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0}
+
+/* ─── LAYOUT ─── */
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 16px}
+@media(min-width:600px){.wrap{padding:0 24px}}
+
+/* ─── TOP BAR ─── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.topbar-logo{font-family:var(--fd);font-size:11px;letter-spacing:2px;color:var(--muted)}
+.topbar-logo b{color:#fff;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.clock{font-family:var(--fd);font-size:11px;color:var(--muted);letter-spacing:2px;display:none}
+@media(min-width:480px){.clock{display:block}}
+.icon-btn{width:40px;height:40px;min-width:40px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s;color:var(--muted);user-select:none}
+.icon-btn:active{background:var(--bg4);transform:scale(.94)}
+.icon-btn svg{width:17px;height:17px;pointer-events:none}
+
+/* ─── HEADER ─── */
+header{padding:40px 0 36px;text-align:center}
+@media(min-width:600px){header{padding:64px 0 48px}}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid var(--border2);border-radius:100px;font-size:10px;font-family:var(--fd);letter-spacing:2px;color:var(--muted);margin-bottom:20px;background:rgba(255,255,255,.03);animation:fd .6s both}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ac);box-shadow:0 0 8px var(--ac);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:var(--fd);font-size:clamp(26px,8vw,62px);font-weight:900;line-height:1.05;animation:fd .6s .1s both}
+h1 .metal{background:linear-gradient(135deg,#fff 0%,#aaa 45%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .sub{display:block;font-size:clamp(9px,2.2vw,13px);letter-spacing:3px;color:var(--muted);-webkit-text-fill-color:var(--muted);background:none;margin-top:8px}
+.subtitle{margin:14px auto 0;font-size:13px;color:var(--muted);max-width:420px;line-height:1.7;animation:fd .6s .2s both;padding:0 8px}
+
+/* ─── SEARCH ─── */
+.search-wrap{margin:24px auto 0;max-width:460px;position:relative;animation:fd .6s .3s both}
+.search-wrap svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);width:17px;height:17px;pointer-events:none}
+#search{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:14px 20px 14px 46px;font-family:var(--fb);font-size:16px;color:var(--text);outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+#search::placeholder{color:var(--muted)}
+#search:focus{border-color:rgba(255,255,255,.2)}
+
+/* ─── FILTER PILLS ─── */
+.filters{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin-top:16px;padding-bottom:4px;scrollbar-width:none;animation:fd .6s .35s both;justify-content:flex-start;padding-left:0}
+.filters::-webkit-scrollbar{display:none}
+@media(min-width:520px){.filters{justify-content:center;flex-wrap:wrap;overflow-x:visible}}
+.filter-btn{flex-shrink:0;padding:8px 18px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:var(--fd);font-size:10px;letter-spacing:1.5px;color:var(--muted);cursor:pointer;transition:all .2s;text-transform:uppercase;white-space:nowrap;touch-action:manipulation}
+.filter-btn:active{transform:scale(.95)}
+.filter-btn.active,.filter-btn:hover{border-color:rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.06)}
+.filter-btn[data-f="chemistry"].active{border-color:var(--ac);color:var(--ac);background:rgba(34,211,160,.07)}
+.filter-btn[data-f="organic"].active{border-color:var(--ao);color:var(--ao);background:rgba(167,139,250,.07)}
+.filter-btn[data-f="physics"].active{border-color:var(--ap);color:var(--ap);background:rgba(56,189,248,.07)}
+.filter-btn[data-f="tools"].active{border-color:var(--at);color:var(--at);background:rgba(251,146,60,.07)}
+
+/* ─── STATS ─── */
+.stats{display:flex;justify-content:center;gap:20px;margin-top:28px;animation:fd .6s .4s both;flex-wrap:wrap}
+@media(min-width:400px){.stats{gap:28px}}
+.stat-item{text-align:center}
+.stat-num{font-family:var(--fd);font-size:18px;font-weight:700;color:#fff}
+.stat-label{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.stat-div{width:1px;background:var(--border);align-self:stretch}
+
+/* ─── SECTION HEADER ─── */
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sec-label{font-family:var(--fd);font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+.sec-line{flex:1;height:1px;background:var(--border)}
+
+/* ─── GRID ─── */
+.grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:48px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
+
+/* ─── CARD ─── */
+.card{position:relative;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:inherit;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;animation:fu .45s both;display:flex;flex-direction:column;gap:12px;cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+@media(min-width:600px){.card{padding:26px}}
+.card:active{transform:scale(.98)}
+@media(hover:hover){.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.13)}}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ca),transparent);opacity:0;transition:opacity .3s}
+.card::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:var(--cg);filter:blur(36px);pointer-events:none;opacity:0;transition:opacity .3s}
+@media(hover:hover){.card:hover::before,.card:hover::after{opacity:1}}
+.card[data-cat="organic"]{--ca:var(--ao);--cg:var(--go)}
+.card[data-cat="chemistry"]{--ca:var(--ac);--cg:var(--gc)}
+.card[data-cat="physics"]{--ca:var(--ap);--cg:var(--gp)}
+.card[data-cat="tools"]{--ca:var(--at);--cg:var(--gt)}
+@media(hover:hover){.card:hover{box-shadow:0 8px 40px var(--cg)}}
+.card-icon{width:48px;height:48px;min-width:48px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.card-icon::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 50%);pointer-events:none}
+.card-icon svg{width:22px;height:22px}
+.card-tag{font-size:9px;font-family:var(--fd);letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid}
+.card[data-cat="organic"] .card-tag{color:var(--ao);border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.07)}
+.card[data-cat="chemistry"] .card-tag{color:var(--ac);border-color:rgba(34,211,160,.3);background:rgba(34,211,160,.07)}
+.card[data-cat="physics"] .card-tag{color:var(--ap);border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.07)}
+.card[data-cat="tools"] .card-tag{color:var(--at);border-color:rgba(251,146,60,.3);background:rgba(251,146,60,.07)}
+.card-title{font-family:var(--fd);font-size:13px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:4px}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border)}
+.card-cta{font-size:10px;font-family:var(--fd);letter-spacing:1px;color:var(--muted)}
+.arr{width:28px;height:28px;min-width:28px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.arr svg{width:11px;height:11px;color:var(--muted)}
+.card-wide{flex-direction:column}
+@media(min-width:640px){.card-wide{flex-direction:row;grid-column:1/-1;align-items:center;gap:20px}}
+.card-wide .card-info{flex:1}
+.card.hidden{display:none}
+
+/* ─── FEATURES ─── */
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:48px}
+@media(min-width:480px){.feats{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:800px){.feats{grid-template-columns:repeat(6,1fr)}}
+.feat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;display:flex;flex-direction:column;gap:8px}
+.feat-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.feat-icon svg{width:16px;height:16px}
+.feat-name{font-family:var(--fd);font-size:10px;font-weight:700;color:#fff;letter-spacing:.3px}
+.feat-desc{font-size:10px;color:var(--muted);line-height:1.5}
+
+/* ─── PROGRESS ─── */
+.prog-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:48px}
+@media(min-width:600px){.prog-box{padding:28px}}
+.prog-title{font-family:var(--fd);font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:18px;text-transform:uppercase}
+.prog-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:480px){.prog-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:760px){.prog-grid{grid-template-columns:repeat(3,1fr)}}
+.prog-item{background:var(--bg3);border-radius:10px;padding:14px 16px}
+.prog-row{display:flex;justify-content:space-between;margin-bottom:8px}
+.prog-lbl{font-size:12px;color:var(--text)}
+.prog-pct{font-family:var(--fd);font-size:10px;color:var(--muted)}
+.prog-bar{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.prog-btns{display:flex;gap:5px}
+.prog-btn{flex:1;padding:6px 0;font-size:9px;font-family:var(--fd);background:rgba(255,255,255,.04);color:var(--muted);border:1px solid rgba(255,255,255,.06);border-radius:6px;cursor:pointer;transition:all .2s;touch-action:manipulation;min-height:32px}
+.prog-btn:active{transform:scale(.93)}
+
+/* ─── DINO GAME ─── */
+.dino-box{background:var(--bg2);border:1px solid rgba(250,204,21,.14);border-radius:var(--radius);padding:20px;margin-bottom:48px;overflow:hidden}
+@media(min-width:600px){.dino-box{padding:28px}}
+.dino-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px}
+.dino-title{font-family:var(--fd);font-size:13px;font-weight:700;color:#facc15}
+.dino-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.score-row{display:flex;gap:16px;flex-shrink:0}
+.sc{text-align:center}
+.sc-val{font-family:var(--fd);font-size:16px;font-weight:700;color:#fff}
+.sc-lbl{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+#dino-canvas{width:100%;height:140px;background:#111;border-radius:10px;border:1px solid rgba(255,255,255,.06);display:block;touch-action:none;cursor:pointer}
+/* Big touch button for mobile */
+.dino-controls{display:flex;gap:10px;margin-top:10px}
+.dino-btn{flex:1;padding:14px 10px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);border-radius:10px;font-family:var(--fd);font-size:11px;letter-spacing:1px;color:#facc15;cursor:pointer;transition:all .2s;touch-action:manipulation;text-align:center}
+.dino-btn:active{background:rgba(250,204,21,.2);transform:scale(.96)}
+.dino-hint{text-align:center;margin-top:8px;font-size:10px;color:var(--muted);font-family:var(--fd);letter-spacing:1px}
+
+/* ─── DEVELOPER CARD ─── */
+.dev-card{background:var(--bg2);border:1px solid rgba(244,114,182,.15);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden;margin-bottom:48px}
+@media(min-width:600px){.dev-card{flex-direction:row;align-items:center;gap:28px;padding:36px}}
+.dev-card::after{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(244,114,182,.05);filter:blur(60px);pointer-events:none}
+.dev-top{display:flex;align-items:center;gap:16px}
+.dev-avatar{width:64px;height:64px;min-width:64px;border-radius:50%;background:linear-gradient(135deg,#3b1f4e,#1a2f4e);border:2px solid rgba(244,114,182,.25);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:18px;font-weight:700;color:var(--ad);position:relative}
+.dev-avatar::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(244,114,182,.12)}
+.dev-info{flex:1;min-width:0}
+.dev-name{font-family:var(--fd);font-size:16px;font-weight:700;color:#fff}
+@media(min-width:400px){.dev-name{font-size:18px}}
+.dev-role{font-size:11px;color:var(--ad);letter-spacing:1px;margin-top:3px;margin-bottom:10px}
+.dev-tags{display:flex;flex-wrap:wrap;gap:6px}
+.dev-tag{padding:4px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.09);font-size:9px;font-family:var(--fd);letter-spacing:.5px;color:var(--muted);background:rgba(255,255,255,.03)}
+.dev-tag.hl{border-color:rgba(244,114,182,.3);color:var(--ad);background:rgba(244,114,182,.07)}
+.dev-body{flex:1}
+.dev-stats{display:flex;gap:20px;margin-bottom:14px}
+.dev-stat-n{font-family:var(--fd);font-size:22px;font-weight:700;color:#fff}
+.dev-stat-l{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.gh-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:100px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.03);font-family:var(--fd);font-size:10px;letter-spacing:1px;color:var(--muted);text-decoration:none;transition:all .2s;cursor:pointer;touch-action:manipulation}
+.gh-btn:active{background:rgba(244,114,182,.1)}
+@media(hover:hover){.gh-btn:hover{border-color:rgba(244,114,182,.4);color:var(--ad);background:rgba(244,114,182,.06)}}
+.gh-btn svg{width:15px;height:15px;flex-shrink:0}
+
+/* ─── BOTTOM NAV (mobile) ─── */
+.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(14,14,14,.95);border-top:1px solid var(--border);padding:8px 0 calc(8px + var(--safe-bottom));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;touch-action:manipulation;padding:4px 0;transition:all .15s}
+.bnav-item:active{transform:scale(.9)}
+.bnav-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.bnav-icon svg{width:20px;height:20px;color:var(--muted);transition:color .2s}
+.bnav-label{font-family:var(--fd);font-size:8px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;transition:color .2s}
+.bnav-item.active .bnav-icon svg{color:#fff}
+.bnav-item.active .bnav-label{color:#fff}
+@media(min-width:900px){.bottom-nav{display:none}body{padding-bottom:0}}
+
+/* ─── NO RESULTS ─── */
+#no-results{display:none;text-align:center;padding:48px 0;color:var(--muted);font-size:14px}
+
+/* ─── TOAST ─── */
+.toast{position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(6px);background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:11px 20px;font-size:12px;font-family:var(--fd);letter-spacing:1px;color:var(--text);z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+@media(min-width:900px){.toast{bottom:24px;right:24px;left:auto;transform:translateY(6px)}}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(min-width:900px){.toast.show{transform:translateY(0)}}
+
+/* ─── FOOTER ─── */
+footer{text-align:center;padding:28px 0 48px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+footer a{color:var(--ad);text-decoration:none}
+.fhl{color:var(--ac)}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fd{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.card:nth-child(1){animation-delay:.04s}.card:nth-child(2){animation-delay:.08s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.16s}.card:nth-child(5){animation-delay:.20s}.card:nth-child(6){animation-delay:.24s}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="wrap">
+  <nav class="topbar">
+    <div class="topbar-logo">SEC3 <b>HUB</b> / 2026</div>
+    <div class="topbar-right">
+      <span class="clock" id="clock">00:00:00</span>
+      <button class="icon-btn" onclick="scrollTo2('dino-anchor')" title="Dino Game" aria-label="Dino Game">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </button>
+      <button class="icon-btn" onclick="copyLink()" title="Share" aria-label="Share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- HEADER -->
+<header id="top">
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span>ACADEMIC YEAR 2026</div>
+    <h1>
+      <span class="metal">SEC 3 HUB</span>
+      <span class="sub">STUDY RESOURCES · OMAR ISMAIL</span>
+    </h1>
+    <p class="subtitle">Everything for Secondary 3 — chemistry, physics, tools &amp; a dino game for study breaks.</p>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="search" type="search" placeholder="Search resources…" autocomplete="off" autocorrect="off" spellcheck="false"/>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-f="all">All</button>
+      <button class="filter-btn" data-f="organic">Organic</button>
+      <button class="filter-btn" data-f="chemistry">Chemistry</button>
+      <button class="filter-btn" data-f="physics">Physics</button>
+      <button class="filter-btn" data-f="tools">Tools</button>
+    </div>
+    <div class="stats">
+      <div class="stat-item"><div class="stat-num" id="cnt">6</div><div class="stat-label">Resources</div></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Subjects</div></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><div class="stat-num" id="visit-cnt">1</div><div class="stat-label">Visits</div></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Access</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- FEATURES -->
+<div class="sec-hdr" id="features-sec"><span class="sec-label">Features</span><div class="sec-line"></div></div>
+<div class="feats" style="animation:fu .5s .1s both">
+  <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div><div class="feat-name">Live Search</div><div class="feat-desc">Instant filtering as you type.</div></div>
+  <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ao)" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="feat-name">Progress</div><div class="feat-desc">Track your revision by chapter.</div></div>
+  <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="1.7"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div class="feat-name">Dino Game</div><div class="feat-desc">Built-in runner for breaks.</div></div>
+  <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ap)" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="feat-name">Live Clock</div><div class="feat-desc">Real-time clock always visible.</div></div>
+  <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--at)" stroke-width="1.7"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div><div class="feat-name">Filter</div><div class="feat-desc">Filter by subject in one tap.</div></div>
+  <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ad)" stroke-width="1.7"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div><div class="feat-name">Share</div><div class="feat-desc">Share with classmates easily.</div></div>
+</div>
+
+<!-- CHEMISTRY -->
+<div class="sec-hdr" id="chem-sec"><span class="sec-label">Chemistry</span><div class="sec-line"></div></div>
+<div class="grid" id="main-grid">
+
+  <a class="card card-wide" data-cat="organic"
+     href="https://omarmohamedismail.github.io/chemistry-3sec-2026/"
+     target="_blank" rel="noopener" data-search="organic chemistry carbon compounds">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ao)" stroke-width="1.5"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><line x1="12" y1="7" x2="7.5" y2="15"/><line x1="12" y1="7" x2="16.5" y2="15"/><line x1="7.5" y1="17" x2="16.5" y2="17"/></svg></div>
+    <div class="card-info">
+      <div style="margin-bottom:6px"><span class="card-tag">Organic</span></div>
+      <div class="card-title">Organic Chemistry — Full Course</div>
+      <div class="card-desc">Complete organic chemistry for Sec 3. All essential compounds, reactions, and mechanisms for 2026.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN RESOURCE</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" data-cat="chemistry"
+     href="https://omarmohamedismail.github.io/chemistry-v1/"
+     target="_blank" rel="noopener" data-search="chemistry chapter 1 atoms elements periodic">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></div>
+    <div class="card-info">
+      <div style="margin-bottom:6px"><span class="card-tag">Chemistry</span></div>
+      <div class="card-title">Chemistry — Chapter 1</div>
+      <div class="card-desc">Atomic structure, periodic table, and core chemical principles.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" data-cat="chemistry"
+     href="https://omarmohamedismail.github.io/chemistry-v2/"
+     target="_blank" rel="noopener" data-search="chemistry chapter 2 bonding ionic covalent">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v4"/><path d="M21 3h-4"/><path d="M21 9V5a2 2 0 0 0-2-2"/><path d="M3 15v4a2 2 0 0 0 2 2h4"/><path d="M15 21h4a2 2 0 0 0 2-2v-4"/><circle cx="12" cy="12" r="3"/></svg></div>
+    <div class="card-info">
+      <div style="margin-bottom:6px"><span class="card-tag">Chemistry</span></div>
+      <div class="card-title">Chemistry — Chapter 2</div>
+      <div class="card-desc">Chemical bonding, ionic and covalent structures, and molecular geometry.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" data-cat="chemistry"
+     href="https://omarmohamedismail.github.io/chemistry-v3/#"
+     target="_blank" rel="noopener" data-search="chemistry chapter 3 stoichiometry moles equations">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5"><path d="M9 3 5 21"/><path d="M15 3l-4 18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg></div>
+    <div class="card-info">
+      <div style="margin-bottom:6px"><span class="card-tag">Chemistry</span></div>
+      <div class="card-title">Chemistry — Chapter 3</div>
+      <div class="card-desc">Stoichiometry, mole calculations, and balancing chemical equations.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+</div>
+
+<!-- PHYSICS & TOOLS -->
+<div class="sec-hdr" id="phys-sec"><span class="sec-label">Physics &amp; Tools</span><div class="sec-line"></div></div>
+<div class="grid" id="grid2">
+
+  <a class="card" data-cat="physics"
+     href="https://omarmohamedismail.github.io/physics-7070/#"
+     target="_blank" rel="noopener" data-search="physics forces motion energy waves electricity">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ap)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+    <div class="card-info">
+      <div style="margin-bottom:6px"><span class="card-tag">Physics</span></div>
+      <div class="card-title">Physics — Full Resource</div>
+      <div class="card-desc">Forces, motion, energy, waves, and electricity for Sec 3.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" data-cat="tools"
+     href="https://omarmohamedismail.github.io/pomodoro-v707/"
+     target="_blank" rel="noopener" data-search="pomodoro timer study focus productivity">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--at)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><path d="M9 2h6"/></svg></div>
+    <div class="card-info">
+      <div style="margin-bottom:6px"><span class="card-tag">Tools</span></div>
+      <div class="card-title">Pomodoro Timer</div>
+      <div class="card-desc">25-minute study sprints with breaks to maximise focus and retention.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+</div>
+
+<div id="no-results" style="display:none;text-align:center;padding:48px 0;color:var(--muted)">
+  <p style="font-size:14px">No resources match your search.</p>
+</div>
+
+<!-- PROGRESS TRACKER -->
+<div class="sec-hdr" id="progress-sec"><span class="sec-label">My Progress</span><div class="sec-line"></div></div>
+<div class="prog-box" style="animation:fu .5s .2s both">
+  <div class="prog-title">📚 Tap to update your revision progress</div>
+  <div class="prog-grid" id="prog-grid"></div>
+</div>
+
+<!-- DINO GAME -->
+<div class="sec-hdr" id="dino-anchor"><span class="sec-label">Dino Runner</span><div class="sec-line"></div></div>
+<div class="dino-box" style="animation:fu .5s .3s both">
+  <div class="dino-hdr">
+    <div>
+      <div class="dino-title">🦕 DINO RUNNER</div>
+      <div class="dino-sub" id="dino-hint">Tap the button or press Space to start!</div>
+    </div>
+    <div class="score-row">
+      <div class="sc"><div class="sc-val" id="dino-score">0</div><div class="sc-lbl">Score</div></div>
+      <div class="sc"><div class="sc-val" id="dino-best">0</div><div class="sc-lbl">Best</div></div>
+    </div>
+  </div>
+  <canvas id="dino-canvas" width="800" height="140" role="img" aria-label="Dino runner game"></canvas>
+  <div class="dino-controls">
+    <button class="dino-btn" id="jump-btn" ontouchstart="dinoJump()" onclick="dinoJump()">⬆ JUMP</button>
+    <button class="dino-btn" id="start-btn" ontouchstart="dinoStart()" onclick="dinoStart()">▶ START / RESTART</button>
+  </div>
+</div>
+
+<!-- DEVELOPER -->
+<div class="sec-hdr" id="dev-sec"><span class="sec-label">Developer</span><div class="sec-line"></div></div>
+<div class="dev-card" style="animation:fu .5s .4s both">
+  <div class="dev-top">
+    <div class="dev-avatar">O</div>
+    <div class="dev-info">
+      <div class="dev-name">Omar Mohamed Ismail</div>
+      <div class="dev-role">DEVELOPER &amp; EDUCATOR · 2026</div>
+      <div class="dev-tags">
+        <span class="dev-tag hl">Creator</span>
+        <span class="dev-tag">Chemistry</span>
+        <span class="dev-tag">Physics</span>
+        <span class="dev-tag">Web Dev</span>
+        <span class="dev-tag">Open Source</span>
+      </div>
+    </div>
+  </div>
+  <div class="dev-body">
+    <div class="dev-stats">
+      <div><div class="dev-stat-n">6</div><div class="dev-stat-l">Projects</div></div>
+      <div><div class="dev-stat-n">3</div><div class="dev-stat-l">Subjects</div></div>
+      <div><div class="dev-stat-n" id="dino-best-dev">0</div><div class="dev-stat-l">Dino PB</div></div>
+    </div>
+    <a class="gh-btn" href="https://github.com/omarmohamedismail" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GITHUB PROFILE
+    </a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Built with ❤️ by <a href="https://github.com/omarmohamedismail" target="_blank">Omar Mohamed Ismail</a> · <span class="fhl">Sec 3 — 2026</span></p>
+    <p style="margin-top:6px;font-size:10px;color:#444">Free &amp; open access · GitHub Pages</p>
+  </div>
+</footer>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" aria-label="Bottom navigation">
+  <div class="bnav-item active" onclick="bnavGo('top','home-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <span class="bnav-label">Home</span>
+  </div>
+  <div class="bnav-item" onclick="bnavGo('chem-sec','chem-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></div>
+    <span class="bnav-label">Chem</span>
+  </div>
+  <div class="bnav-item" onclick="bnavGo('phys-sec','phys-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+    <span class="bnav-label">Physics</span>
+  </div>
+  <div class="bnav-item" onclick="bnavGo('dino-anchor','dino-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+    <span class="bnav-label">Dino</span>
+  </div>
+  <div class="bnav-item" onclick="bnavGo('dev-sec','dev-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <span class="bnav-label">Dev</span>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── CLOCK ── */
+function tick(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleTimeString('en-EG',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+tick();setInterval(tick,1000);
+
+/* ── VISITS ── */
+let v=parseInt(sessionStorage.getItem('v3v')||'0')+1;
+sessionStorage.setItem('v3v',v);
+document.getElementById('visit-cnt').textContent=v;
+
+/* ── TOAST ── */
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ── COPY LINK ── */
+function copyLink(){
+  if(navigator.share){navigator.share({title:'Sec 3 Hub',url:location.href}).catch(()=>{});}
+  else navigator.clipboard.writeText(location.href).then(()=>toast('🔗 Link copied!'));
+}
+
+/* ── SCROLL ── */
+function scrollTo2(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* ── BOTTOM NAV ── */
+const navItems=document.querySelectorAll('.bnav-item');
+function bnavGo(sectionId,_){
+  navItems.forEach(n=>n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  scrollTo2(sectionId);
+}
+
+/* ── SEARCH + FILTER ── */
+const searchEl=document.getElementById('search');
+const allCards=document.querySelectorAll('.card');
+const noRes=document.getElementById('no-results');
+let activeF='all';
+
+function applyFilters(){
+  const q=searchEl.value.toLowerCase().trim();
+  let vis=0;
+  allCards.forEach(c=>{
+    const t=(c.querySelector('.card-title')||{}).textContent||'';
+    const d=(c.querySelector('.card-desc')||{}).textContent||'';
+    const s=c.dataset.search||'';
+    const cat=c.dataset.cat||'';
+    const mq=!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q)||s.includes(q)||cat.includes(q);
+    const mf=activeF==='all'||cat===activeF;
+    if(mq&&mf){c.classList.remove('hidden');vis++;}
+    else c.classList.add('hidden');
+  });
+  noRes.style.display=vis===0?'block':'none';
+  document.getElementById('cnt').textContent=vis;
+}
+searchEl.addEventListener('input',applyFilters);
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeF=btn.dataset.f;
+    applyFilters();
+  });
+});
+
+/* ── PROGRESS TRACKER ── */
+const chapters=[
+  {id:'org',label:'Organic Chemistry',color:'var(--ao)'},
+  {id:'ch1',label:'Chemistry Ch.1',color:'var(--ac)'},
+  {id:'ch2',label:'Chemistry Ch.2',color:'var(--ac)'},
+  {id:'ch3',label:'Chemistry Ch.3',color:'var(--ac)'},
+  {id:'phy',label:'Physics',color:'var(--ap)'},
+  {id:'pom',label:'Pomodoro Sessions',color:'var(--at)'},
+];
+const pg=document.getElementById('prog-grid');
+const saved=JSON.parse(localStorage.getItem('s3p')||'{}');
+chapters.forEach(ch=>{
+  const pct=saved[ch.id]||0;
+  const div=document.createElement('div');
+  div.className='prog-item';
+  div.innerHTML=`<div class="prog-row"><span class="prog-lbl">${ch.label}</span><span class="prog-pct" id="pp-${ch.id}">${pct}%</span></div>
+<div class="prog-bar"><div class="prog-fill" id="pf-${ch.id}" style="width:${pct}%;background:${ch.color}"></div></div>
+<div class="prog-btns">${[0,25,50,75,100].map(v=>`<button class="prog-btn" style="${pct===v?`background:${ch.color};color:#000;border-color:${ch.color}`:''}" onclick="setPct('${ch.id}',${v},'${ch.color}')">${v}%</button>`).join('')}</div>`;
+  pg.appendChild(div);
+});
+function setPct(id,val,color){
+  const s=JSON.parse(localStorage.getItem('s3p')||'{}');
+  s[id]=val;localStorage.setItem('s3p',JSON.stringify(s));
+  document.getElementById('pf-'+id).style.width=val+'%';
+  document.getElementById('pp-'+id).textContent=val+'%';
+  const item=document.getElementById('pf-'+id).closest('.prog-item');
+  item.querySelectorAll('.prog-btn').forEach(b=>{
+    const bv=parseInt(b.textContent);
+    if(bv===val){b.style.background=color;b.style.color='#000';b.style.borderColor=color;}
+    else{b.style.background='rgba(255,255,255,.04)';b.style.color='var(--muted)';b.style.borderColor='rgba(255,255,255,.06)';}
+  });
+  toast('✅ Saved!');
+}
+
+/* ── DINO GAME ── */
+(function(){
+  const cv=document.getElementById('dino-canvas');
+  const ctx=cv.getContext('2d');
+  const scoreEl=document.getElementById('dino-score');
+  const bestEl=document.getElementById('dino-best');
+  const bestDevEl=document.getElementById('dino-best-dev');
+  const hintEl=document.getElementById('dino-hint');
+
+  const W=cv.width, H=cv.height;
+  const GY=H-28;
+  const DX=65;
+
+  let state='idle',score=0,best=parseInt(localStorage.getItem('dinoBest')||'0');
+  bestEl.textContent=best; bestDevEl.textContent=best;
+  let dinoY=GY,vy=0,jumping=false;
+  const GRAV=0.55,JV=-12;
+  let cacti=[],ct=0,nextC=90,speed=4,frame=0;
+  let clouds=[{x:200,y:28,w:70},{x:500,y:18,w:50}];
+  let ground=Array.from({length:18},(_,i)=>({x:i*(W/17),w:12+Math.random()*24}));
+  let stars=Array.from({length:30},()=>({x:Math.random()*W,y:Math.random()*(GY-20),r:Math.random()<.3?1.5:1}));
+
+  function startGame(){
+    dinoY=GY;vy=0;jumping=false;
+    cacti=[];ct=0;nextC=90;speed=4;frame=0;score=0;
+    state='running';
+    hintEl.textContent='Tap JUMP or press Space!';
+  }
+
+  function jump(){
+    if(state==='running'){
+      if(!jumping){vy=JV;jumping=true;}
+      else if(vy<0){vy+=JV*.3;}
+    }
+  }
+
+  // exposed globals for buttons
+  window.dinoJump=jump;
+  window.dinoStart=function(){if(state==='idle'||state==='dead')startGame();else jump();};
+
+  document.addEventListener('keydown',e=>{
+    if(e.code==='Space'||e.code==='ArrowUp'){
+      e.preventDefault();
+      if(state==='idle'||state==='dead')startGame();
+      else jump();
+    }
+  });
+  cv.addEventListener('click',()=>{if(state==='idle'||state==='dead')startGame();else jump();});
+  cv.addEventListener('touchstart',e=>{e.preventDefault();if(state==='idle'||state==='dead')startGame();else jump();},{passive:false});
+
+  function drawDino(){
+    const x=DX,y=dinoY;
+    // shadow
+    ctx.fillStyle='rgba(34,211,160,.12)';
+    ctx.beginPath();ctx.ellipse(x+10,GY+3,16,4,0,0,Math.PI*2);ctx.fill();
+    // body
+    ctx.fillStyle='#22d3a0';ctx.fillRect(x,y-26,18,18);
+    // head
+    ctx.fillRect(x+9,y-36,13,11);
+    // eye
+    ctx.fillStyle='#0d0d0d';ctx.fillRect(x+18,y-34,3,3);
+    // highlight
+    ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillRect(x+18,y-34,1,1);
+    // tail
+    ctx.fillStyle='#1aaa82';ctx.fillRect(x-7,y-18,9,7);
+    // arm
+    ctx.fillStyle='#22d3a0';ctx.fillRect(x+16,y-20,5,4);
+    // legs
+    const leg=Math.floor(frame/5)%2;
+    ctx.fillStyle='#1aaa82';
+    ctx.fillRect(x+(leg?3:9),y-7,5,9);
+    ctx.fillRect(x+(leg?9:3),y-3,5,5);
+  }
+
+  function drawCactus(c){
+    ctx.fillStyle='#4ade80';
+    // main stem
+    ctx.fillRect(c.x,GY-c.h,9,c.h);
+    // left arm
+    ctx.fillRect(c.x-5,GY-c.h+8,5,7);ctx.fillRect(c.x-5,GY-c.h+4,3,5);
+    // right arm
+    ctx.fillRect(c.x+9,GY-c.h+12,5,7);ctx.fillRect(c.x+11,GY-c.h+8,3,5);
+    if(c.twin){
+      ctx.fillRect(c.x+18,GY-c.h+4,9,c.h-4);
+      ctx.fillRect(c.x+13,GY-c.h+14,6,6);
+      ctx.fillRect(c.x+27,GY-c.h+10,5,7);
+    }
+  }
+
+  function drawGround(){
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,GY);ctx.lineTo(W,GY);ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,.05)';
+    ground.forEach(g=>{ctx.fillRect(g.x,GY+2,g.w,2);g.x-=speed*.35;if(g.x+g.w<0)g.x=W+Math.random()*100;});
+  }
+
+  function drawClouds(){
+    ctx.fillStyle='rgba(255,255,255,.04)';
+    clouds.forEach(c=>{
+      ctx.beginPath();ctx.ellipse(c.x,c.y,c.w,10,0,0,Math.PI*2);ctx.fill();
+      c.x-=.6;if(c.x+c.w<0){c.x=W+80;c.y=14+Math.random()*28;c.w=35+Math.random()*55;}
+    });
+  }
+
+  function drawStars(){
+    if(state!=='running')return;
+    ctx.fillStyle='rgba(255,255,255,.2)';
+    stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});
+  }
+
+  function drawHUD(){
+    ctx.fillStyle='rgba(255,255,255,.3)';
+    ctx.font='bold 12px Orbitron,monospace';
+    ctx.textAlign='right';
+    ctx.fillText(String(Math.floor(score)).padStart(5,'0'),W-14,22);
+    ctx.textAlign='left';
+  }
+
+  function hitCheck(c){
+    const dx=c.x-(DX+9),dy=(dinoY-26)-(GY-c.h);
+    return dx>-11&&dx<(c.twin?27:9)&&dy<22&&dy>-c.h+4;
+  }
+
+  function loop(){
+    requestAnimationFrame(loop);
+    ctx.clearRect(0,0,W,H);
+    drawStars();
+    drawClouds();
+    drawGround();
+
+    if(state==='running'){
+      frame++;score+=.1;
+      speed=4+score*.0028;
+      vy+=GRAV;dinoY+=vy;
+      if(dinoY>=GY){dinoY=GY;jumping=false;vy=0;}
+      ct++;
+      if(ct>=nextC){
+        cacti.push({x:W,h:22+Math.random()*18,twin:Math.random()>.6});
+        ct=0;nextC=50+Math.random()*65;
+      }
+      cacti.forEach(c=>c.x-=speed);
+      cacti=cacti.filter(c=>c.x>-50);
+      for(let c of cacti){
+        if(hitCheck(c)){
+          state='dead';
+          const sc=Math.floor(score);
+          if(sc>best){best=sc;localStorage.setItem('dinoBest',best);bestEl.textContent=best;bestDevEl.textContent=best;}
+          scoreEl.textContent=sc;
+          hintEl.textContent='💀 Game Over! Tap START to retry.';
+          return;
+        }
+      }
+      scoreEl.textContent=Math.floor(score);
+    }
+
+    cacti.forEach(drawCactus);
+    drawDino();
+    drawHUD();
+
+    if(state==='idle'){
+      ctx.fillStyle='rgba(250,204,21,.6)';
+      ctx.font='bold 13px Orbitron,monospace';
+      ctx.textAlign='center';
+      ctx.fillText('TAP START  ·  PRESS SPACE',W/2,H/2+4);
+      ctx.textAlign='left';
+    }
+    if(state==='dead'){
+      ctx.fillStyle='rgba(0,0,0,.45)';ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='#ef4444';
+      ctx.font='bold 15px Orbitron,monospace';
+      ctx.textAlign='center';
+      ctx.fillText('GAME OVER',W/2,H/2-12);
+      ctx.fillStyle='rgba(255,255,255,.45)';
+      ctx.font='11px Orbitron,monospace';
+      ctx.fillText('SCORE '+Math.floor(score)+'   BEST '+best,W/2,H/2+10);
+      ctx.textAlign='left';
+    }
+  }
+  loop();
+})();
+</script>
+</body>
+</html>
