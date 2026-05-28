@@ -335,6 +335,111 @@ footer a{color:var(--ad);text-decoration:none}
   padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.6;
 }
 
+/* ─── FULLSCREEN BUTTON (section header) ─── */
+.pomo-fs-btn{
+  width:34px;height:34px;border-radius:8px;flex-shrink:0;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--muted);transition:all .2s;touch-action:manipulation;
+  margin-left:auto;
+}
+.pomo-fs-btn:active{transform:scale(.9)}
+@media(hover:hover){.pomo-fs-btn:hover{border-color:rgba(255,255,255,.22);color:#fff;background:rgba(255,255,255,.07)}}
+.pomo-fs-btn svg{width:15px;height:15px;pointer-events:none}
+
+/* ─── EXIT FS BUTTON (inside left panel, hidden normally) ─── */
+.pomo-exit-fs{
+  display:none;position:absolute;top:16px;right:16px;z-index:20;
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  align-items:center;justify-content:center;cursor:pointer;
+  color:#fff;transition:all .2s;touch-action:manipulation;
+}
+.pomo-exit-fs svg{width:18px;height:18px;pointer-events:none}
+@media(hover:hover){.pomo-exit-fs:hover{background:rgba(255,255,255,.15)}}
+.pomo-exit-fs:active{transform:scale(.9)}
+
+/* ─── FULLSCREEN MODE ─── */
+/* target both real fullscreen API and .is-fs fallback class */
+.pomo-outer:fullscreen,
+.pomo-outer:-webkit-full-screen,
+.pomo-outer:-moz-full-screen,
+.pomo-outer.is-fs{
+  border-radius:0!important;border:none!important;
+  margin:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+/* make inner fill screen and go vertical */
+.pomo-outer:fullscreen .pomo-inner,
+.pomo-outer:-webkit-full-screen .pomo-inner,
+.pomo-outer:-moz-full-screen .pomo-inner,
+.pomo-outer.is-fs .pomo-inner{
+  flex-direction:column!important;
+  align-items:center;justify-content:center;
+  min-height:100vh;width:100%;
+}
+/* hide settings panel */
+.pomo-outer:fullscreen .pomo-right,
+.pomo-outer:-webkit-full-screen .pomo-right,
+.pomo-outer:-moz-full-screen .pomo-right,
+.pomo-outer.is-fs .pomo-right{display:none!important}
+/* expand left panel */
+.pomo-outer:fullscreen .pomo-left,
+.pomo-outer:-webkit-full-screen .pomo-left,
+.pomo-outer:-moz-full-screen .pomo-left,
+.pomo-outer.is-fs .pomo-left{
+  border:none!important;flex:none;width:100%;
+  padding:32px 24px 40px!important;
+  gap:24px!important;
+}
+/* BIG ring */
+.pomo-outer:fullscreen .pomo-ring-wrap,
+.pomo-outer:-webkit-full-screen .pomo-ring-wrap,
+.pomo-outer:-moz-full-screen .pomo-ring-wrap,
+.pomo-outer.is-fs .pomo-ring-wrap{
+  width:min(52vw,320px)!important;
+  height:min(52vw,320px)!important;
+}
+/* BIG time */
+.pomo-outer:fullscreen .pomo-time,
+.pomo-outer:-webkit-full-screen .pomo-time,
+.pomo-outer:-moz-full-screen .pomo-time,
+.pomo-outer.is-fs .pomo-time{
+  font-size:min(13vw,72px)!important;
+}
+.pomo-outer:fullscreen .pomo-badge,
+.pomo-outer:-webkit-full-screen .pomo-badge,
+.pomo-outer:-moz-full-screen .pomo-badge,
+.pomo-outer.is-fs .pomo-badge{font-size:11px!important;letter-spacing:3px!important}
+/* bigger dots */
+.pomo-outer:fullscreen .pomo-dot,
+.pomo-outer:-webkit-full-screen .pomo-dot,
+.pomo-outer:-moz-full-screen .pomo-dot,
+.pomo-outer.is-fs .pomo-dot{width:11px!important;height:11px!important}
+/* bigger controls */
+.pomo-outer:fullscreen .pomo-ctrl,
+.pomo-outer:-webkit-full-screen .pomo-ctrl,
+.pomo-outer:-moz-full-screen .pomo-ctrl,
+.pomo-outer.is-fs .pomo-ctrl{width:56px!important;height:56px!important}
+.pomo-outer:fullscreen .pomo-play,
+.pomo-outer:-webkit-full-screen .pomo-play,
+.pomo-outer:-moz-full-screen .pomo-play,
+.pomo-outer.is-fs .pomo-play{width:76px!important;height:76px!important}
+.pomo-outer:fullscreen .pomo-play svg,
+.pomo-outer:-webkit-full-screen .pomo-play svg,
+.pomo-outer:-moz-full-screen .pomo-play svg,
+.pomo-outer.is-fs .pomo-play svg{width:26px!important;height:26px!important}
+/* show exit button */
+.pomo-outer:fullscreen .pomo-exit-fs,
+.pomo-outer:-webkit-full-screen .pomo-exit-fs,
+.pomo-outer:-moz-full-screen .pomo-exit-fs,
+.pomo-outer.is-fs .pomo-exit-fs{display:flex!important}
+/* ambient glow bigger in FS */
+.pomo-outer:fullscreen .pomo-ambient,
+.pomo-outer:-webkit-full-screen .pomo-ambient,
+.pomo-outer:-moz-full-screen .pomo-ambient,
+.pomo-outer.is-fs .pomo-ambient{width:800px!important;height:800px!important}
+
 /* ─── ANIMATIONS ─── */
 @keyframes fd{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
