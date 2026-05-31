@@ -335,110 +335,147 @@ footer a{color:var(--ad);text-decoration:none}
   padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.6;
 }
 
-/* ─── FULLSCREEN BUTTON (section header) ─── */
-.pomo-fs-btn{
-  width:34px;height:34px;border-radius:8px;flex-shrink:0;
+/* ─── HEADER FULLSCREEN BUTTON ─── */
+.hdr-fs-btn{
+  width:32px;height:32px;flex-shrink:0;border-radius:8px;
   background:rgba(255,255,255,.04);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;color:var(--muted);transition:all .2s;touch-action:manipulation;
-  margin-left:auto;
 }
-.pomo-fs-btn:active{transform:scale(.9)}
-@media(hover:hover){.pomo-fs-btn:hover{border-color:rgba(255,255,255,.22);color:#fff;background:rgba(255,255,255,.07)}}
-.pomo-fs-btn svg{width:15px;height:15px;pointer-events:none}
+.hdr-fs-btn:active{transform:scale(.9)}
+@media(hover:hover){.hdr-fs-btn:hover{border-color:rgba(255,255,255,.22);color:#fff}}
+.hdr-fs-btn svg{width:14px;height:14px;pointer-events:none}
 
-/* ─── EXIT FS BUTTON (inside left panel, hidden normally) ─── */
-.pomo-exit-fs{
-  display:none;position:absolute;top:16px;right:16px;z-index:20;
-  width:40px;height:40px;border-radius:10px;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  align-items:center;justify-content:center;cursor:pointer;
-  color:#fff;transition:all .2s;touch-action:manipulation;
+/* ─── EXIT FULLSCREEN BUTTON (inside panels) ─── */
+.pomo-exit-btn{
+  display:none;position:absolute;top:14px;right:14px;z-index:30;
+  gap:6px;align-items:center;
+  padding:8px 14px;border-radius:10px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  font-family:var(--fd);font-size:10px;letter-spacing:1px;color:#fff;
+  cursor:pointer;transition:all .2s;touch-action:manipulation;
 }
-.pomo-exit-fs svg{width:18px;height:18px;pointer-events:none}
-@media(hover:hover){.pomo-exit-fs:hover{background:rgba(255,255,255,.15)}}
-.pomo-exit-fs:active{transform:scale(.9)}
+.pomo-exit-btn svg{width:15px;height:15px;pointer-events:none;flex-shrink:0}
+.pomo-exit-btn:active{transform:scale(.9)}
+@media(hover:hover){.pomo-exit-btn:hover{background:rgba(255,255,255,.18)}}
 
-/* ─── FULLSCREEN MODE ─── */
-/* target both real fullscreen API and .is-fs fallback class */
-.pomo-outer:fullscreen,
-.pomo-outer:-webkit-full-screen,
-.pomo-outer:-moz-full-screen,
-.pomo-outer.is-fs{
-  border-radius:0!important;border:none!important;
-  margin:0;overflow:hidden;
+/* show exit btn in fullscreen */
+.pomo-outer:fullscreen .pomo-exit-btn,
+.pomo-outer:-webkit-full-screen .pomo-exit-btn,
+.pomo-outer.is-fs .pomo-exit-btn,
+.ct-outer:fullscreen .pomo-exit-btn,
+.ct-outer:-webkit-full-screen .pomo-exit-btn,
+.ct-outer.is-fs .pomo-exit-btn{display:flex!important}
+
+/* ─── COLOR SWATCHES ─── */
+.color-presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.color-swatch{
+  width:32px;height:32px;border-radius:50%;border:2px solid transparent;
+  cursor:pointer;transition:all .2s;flex-shrink:0;touch-action:manipulation;
+  outline:none;
+}
+.color-swatch:active{transform:scale(.85)}
+@media(hover:hover){.color-swatch:hover{transform:scale(1.15)}}
+.color-swatch.chosen{border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.4);transform:scale(1.1)}
+.color-custom-btn{
+  background:rgba(255,255,255,.07)!important;
+  border:1px dashed rgba(255,255,255,.2)!important;
+  display:flex;align-items:center;justify-content:center;color:var(--muted);
+}
+.color-custom-btn svg{width:14px;height:14px;pointer-events:none}
+.color-custom-btn:active{transform:scale(.9)!important}
+
+/* ─── COUNTDOWN TIMER ─── */
+.ct-outer{
+  background:var(--bg2);border:1px solid rgba(255,255,255,.07);
+  border-radius:24px;overflow:hidden;position:relative;margin-bottom:48px;
+}
+.ct-ambient{
+  position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:500px;height:500px;border-radius:50%;
+  background:rgba(56,189,248,.06);filter:blur(90px);
+  pointer-events:none;transition:background 1.3s;
+}
+.ct-inner{display:flex;flex-direction:column;position:relative;z-index:1}
+@media(min-width:760px){.ct-inner{flex-direction:row}}
+.ct-left{
+  padding:28px 20px 24px;display:flex;flex-direction:column;
+  align-items:center;gap:18px;border-bottom:1px solid var(--border);
+}
+@media(min-width:600px){.ct-left{padding:32px 28px 28px}}
+@media(min-width:760px){.ct-left{flex:0 0 300px;border-bottom:none;border-right:1px solid var(--border);padding:40px 32px}}
+.ct-ring-wrap{position:relative;width:190px;height:190px;flex-shrink:0}
+@media(min-width:420px){.ct-ring-wrap{width:210px;height:210px}}
+.ct-time{
+  font-family:var(--fd);font-size:clamp(24px,6vw,36px);font-weight:900;
+  color:#fff;letter-spacing:-2px;line-height:1;
+  text-shadow:0 0 28px rgba(255,255,255,.15);
+}
+/* time inputs */
+.ct-inputs{display:flex;align-items:center;gap:6px;width:100%}
+.ct-input-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.ct-input-label{font-family:var(--fd);font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.ct-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:12px 8px;font-family:var(--fd);font-size:20px;font-weight:700;
+  color:#fff;text-align:center;outline:none;transition:border-color .2s;
+  -webkit-appearance:none;appearance:none;
+  /* hide spin buttons */
+  -moz-appearance:textfield;
+}
+.ct-input::-webkit-outer-spin-button,.ct-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ct-input:focus{border-color:var(--ct-color,#38bdf8);box-shadow:0 0 0 2px rgba(56,189,248,.15)}
+.ct-colon{font-family:var(--fd);font-size:24px;font-weight:900;color:var(--muted);padding-top:14px}
+/* sound row */
+.ct-sound-row{display:flex;flex-wrap:wrap;gap:7px}
+.sound-btn{
+  padding:8px 14px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(255,255,255,.03);font-family:var(--fd);font-size:10px;letter-spacing:.5px;
+  color:var(--muted);cursor:pointer;transition:all .2s;touch-action:manipulation;
+}
+.sound-btn:active{transform:scale(.91)}
+@media(hover:hover){.sound-btn:hover{border-color:rgba(255,255,255,.2);color:#fff}}
+.sound-btn.active{background:rgba(var(--ct-rgb,56 189 248)/.13);border-color:var(--ct-color,#38bdf8);color:var(--ct-color,#38bdf8)}
+
+/* ─── FULLSCREEN: pomo ─── */
+.pomo-outer:fullscreen,.pomo-outer:-webkit-full-screen,.pomo-outer.is-fs{
+  border-radius:0!important;border:none!important;margin:0;
   display:flex;align-items:center;justify-content:center;
 }
-/* make inner fill screen and go vertical */
-.pomo-outer:fullscreen .pomo-inner,
-.pomo-outer:-webkit-full-screen .pomo-inner,
-.pomo-outer:-moz-full-screen .pomo-inner,
-.pomo-outer.is-fs .pomo-inner{
-  flex-direction:column!important;
-  align-items:center;justify-content:center;
-  min-height:100vh;width:100%;
+.pomo-outer:fullscreen .pomo-inner,.pomo-outer:-webkit-full-screen .pomo-inner,.pomo-outer.is-fs .pomo-inner{
+  flex-direction:column!important;align-items:center;justify-content:center;min-height:100vh;width:100%;
 }
-/* hide settings panel */
-.pomo-outer:fullscreen .pomo-right,
-.pomo-outer:-webkit-full-screen .pomo-right,
-.pomo-outer:-moz-full-screen .pomo-right,
-.pomo-outer.is-fs .pomo-right{display:none!important}
-/* expand left panel */
-.pomo-outer:fullscreen .pomo-left,
-.pomo-outer:-webkit-full-screen .pomo-left,
-.pomo-outer:-moz-full-screen .pomo-left,
-.pomo-outer.is-fs .pomo-left{
-  border:none!important;flex:none;width:100%;
-  padding:32px 24px 40px!important;
-  gap:24px!important;
+.pomo-outer:fullscreen .pomo-right,.pomo-outer:-webkit-full-screen .pomo-right,.pomo-outer.is-fs .pomo-right{display:none!important}
+.pomo-outer:fullscreen .pomo-left,.pomo-outer:-webkit-full-screen .pomo-left,.pomo-outer.is-fs .pomo-left{
+  border:none!important;flex:none;width:100%;padding:32px 24px 48px!important;gap:24px!important;
 }
-/* BIG ring */
-.pomo-outer:fullscreen .pomo-ring-wrap,
-.pomo-outer:-webkit-full-screen .pomo-ring-wrap,
-.pomo-outer:-moz-full-screen .pomo-ring-wrap,
-.pomo-outer.is-fs .pomo-ring-wrap{
-  width:min(52vw,320px)!important;
-  height:min(52vw,320px)!important;
+.pomo-outer:fullscreen .pomo-ring-wrap,.pomo-outer:-webkit-full-screen .pomo-ring-wrap,.pomo-outer.is-fs .pomo-ring-wrap{width:min(55vw,340px)!important;height:min(55vw,340px)!important}
+.pomo-outer:fullscreen .pomo-time,.pomo-outer:-webkit-full-screen .pomo-time,.pomo-outer.is-fs .pomo-time{font-size:min(14vw,76px)!important}
+.pomo-outer:fullscreen .pomo-badge,.pomo-outer:-webkit-full-screen .pomo-badge,.pomo-outer.is-fs .pomo-badge{font-size:12px!important;letter-spacing:4px!important}
+.pomo-outer:fullscreen .pomo-dot,.pomo-outer:-webkit-full-screen .pomo-dot,.pomo-outer.is-fs .pomo-dot{width:12px!important;height:12px!important}
+.pomo-outer:fullscreen .pomo-ctrl,.pomo-outer:-webkit-full-screen .pomo-ctrl,.pomo-outer.is-fs .pomo-ctrl{width:58px!important;height:58px!important}
+.pomo-outer:fullscreen .pomo-play,.pomo-outer:-webkit-full-screen .pomo-play,.pomo-outer.is-fs .pomo-play{width:80px!important;height:80px!important}
+.pomo-outer:fullscreen .pomo-play svg,.pomo-outer:-webkit-full-screen .pomo-play svg,.pomo-outer.is-fs .pomo-play svg{width:28px!important;height:28px!important}
+.pomo-outer:fullscreen .pomo-ambient,.pomo-outer:-webkit-full-screen .pomo-ambient,.pomo-outer.is-fs .pomo-ambient{width:900px!important;height:900px!important}
+
+/* ─── FULLSCREEN: countdown ─── */
+.ct-outer:fullscreen,.ct-outer:-webkit-full-screen,.ct-outer.is-fs{
+  border-radius:0!important;border:none!important;margin:0;
+  display:flex;align-items:center;justify-content:center;
 }
-/* BIG time */
-.pomo-outer:fullscreen .pomo-time,
-.pomo-outer:-webkit-full-screen .pomo-time,
-.pomo-outer:-moz-full-screen .pomo-time,
-.pomo-outer.is-fs .pomo-time{
-  font-size:min(13vw,72px)!important;
+.ct-outer:fullscreen .ct-inner,.ct-outer:-webkit-full-screen .ct-inner,.ct-outer.is-fs .ct-inner{
+  flex-direction:column!important;align-items:center;justify-content:center;min-height:100vh;width:100%;
 }
-.pomo-outer:fullscreen .pomo-badge,
-.pomo-outer:-webkit-full-screen .pomo-badge,
-.pomo-outer:-moz-full-screen .pomo-badge,
-.pomo-outer.is-fs .pomo-badge{font-size:11px!important;letter-spacing:3px!important}
-/* bigger dots */
-.pomo-outer:fullscreen .pomo-dot,
-.pomo-outer:-webkit-full-screen .pomo-dot,
-.pomo-outer:-moz-full-screen .pomo-dot,
-.pomo-outer.is-fs .pomo-dot{width:11px!important;height:11px!important}
-/* bigger controls */
-.pomo-outer:fullscreen .pomo-ctrl,
-.pomo-outer:-webkit-full-screen .pomo-ctrl,
-.pomo-outer:-moz-full-screen .pomo-ctrl,
-.pomo-outer.is-fs .pomo-ctrl{width:56px!important;height:56px!important}
-.pomo-outer:fullscreen .pomo-play,
-.pomo-outer:-webkit-full-screen .pomo-play,
-.pomo-outer:-moz-full-screen .pomo-play,
-.pomo-outer.is-fs .pomo-play{width:76px!important;height:76px!important}
-.pomo-outer:fullscreen .pomo-play svg,
-.pomo-outer:-webkit-full-screen .pomo-play svg,
-.pomo-outer:-moz-full-screen .pomo-play svg,
-.pomo-outer.is-fs .pomo-play svg{width:26px!important;height:26px!important}
-/* show exit button */
-.pomo-outer:fullscreen .pomo-exit-fs,
-.pomo-outer:-webkit-full-screen .pomo-exit-fs,
-.pomo-outer:-moz-full-screen .pomo-exit-fs,
-.pomo-outer.is-fs .pomo-exit-fs{display:flex!important}
-/* ambient glow bigger in FS */
-.pomo-outer:fullscreen .pomo-ambient,
-.pomo-outer:-webkit-full-screen .pomo-ambient,
-.pomo-outer:-moz-full-screen .pomo-ambient,
-.pomo-outer.is-fs .pomo-ambient{width:800px!important;height:800px!important}
+.ct-outer:fullscreen .pomo-right,.ct-outer:-webkit-full-screen .pomo-right,.ct-outer.is-fs .pomo-right{display:none!important}
+.ct-outer:fullscreen .ct-left,.ct-outer:-webkit-full-screen .ct-left,.ct-outer.is-fs .ct-left{
+  border:none!important;flex:none;width:100%;padding:32px 24px 48px!important;gap:24px!important;
+}
+.ct-outer:fullscreen .ct-ring-wrap,.ct-outer:-webkit-full-screen .ct-ring-wrap,.ct-outer.is-fs .ct-ring-wrap{width:min(55vw,340px)!important;height:min(55vw,340px)!important}
+.ct-outer:fullscreen .ct-time,.ct-outer:-webkit-full-screen .ct-time,.ct-outer.is-fs .ct-time{font-size:min(10vw,64px)!important}
+.ct-outer:fullscreen .pomo-ctrl,.ct-outer:-webkit-full-screen .pomo-ctrl,.ct-outer.is-fs .pomo-ctrl{width:58px!important;height:58px!important}
+.ct-outer:fullscreen .pomo-play,.ct-outer:-webkit-full-screen .pomo-play,.ct-outer.is-fs .pomo-play{width:80px!important;height:80px!important}
+.ct-outer:fullscreen .pomo-play svg,.ct-outer:-webkit-full-screen .pomo-play svg,.ct-outer.is-fs .pomo-play svg{width:28px!important;height:28px!important}
+.ct-outer:fullscreen .ct-ambient,.ct-outer:-webkit-full-screen .ct-ambient,.ct-outer.is-fs .ct-ambient{width:900px!important;height:900px!important}
 
 /* ─── ANIMATIONS ─── */
 @keyframes fd{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
@@ -610,20 +647,6 @@ footer a{color:var(--ad);text-decoration:none}
     </div>
   </a>
 
-  <a class="card" data-cat="tools"
-     href="https://omarmohamedismail.github.io/pomodoro-v707/"
-     target="_blank" rel="noopener" data-search="pomodoro timer study focus productivity">
-    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--at)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><path d="M9 2h6"/></svg></div>
-    <div class="card-info">
-      <div style="margin-bottom:6px"><span class="card-tag">Tools</span></div>
-      <div class="card-title">Pomodoro Timer</div>
-      <div class="card-desc">25-minute study sprints with breaks to maximise focus and retention.</div>
-    </div>
-    <div class="card-footer">
-      <span class="card-cta">OPEN</span>
-      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
-    </div>
-  </a>
 
 </div>
 
@@ -632,13 +655,24 @@ footer a{color:var(--ad);text-decoration:none}
 </div>
 
 <!-- POMODORO TIMER -->
-<div class="sec-hdr" id="pomo-anchor"><span class="sec-label">Focus Timer</span><div class="sec-line"></div></div>
-<div class="pomo-outer" id="pomo-outer" style="animation:fu .5s .25s both">
+<div class="sec-hdr" id="pomo-anchor">
+  <span class="sec-label">Focus Timer</span>
+  <div class="sec-line"></div>
+  <button class="hdr-fs-btn" onclick="pomoFullscreen()" title="Fullscreen" aria-label="Fullscreen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+  </button>
+</div>
+<div class="pomo-outer" id="pomo-outer" style="animation:fu .5s .25s both;position:relative">
   <div class="pomo-ambient" id="pomo-ambient"></div>
   <div class="pomo-inner">
 
     <!-- LEFT: Ring + controls -->
     <div class="pomo-left">
+      <!-- exit fullscreen button, only visible in FS -->
+      <button class="pomo-exit-btn" id="pomo-exit-btn" onclick="pomoExitFs()" aria-label="Exit fullscreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+        Exit
+      </button>
       <!-- Mode tabs -->
       <div class="pomo-modes">
         <button class="pomo-mode active" data-mode="focus"  onclick="pomoSetMode(this)">🎯 Focus</button>
@@ -731,6 +765,31 @@ footer a{color:var(--ad);text-decoration:none}
 
       <div class="pomo-divider"></div>
 
+      <!-- Color Picker -->
+      <div class="pomo-group">
+        <div class="pomo-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20c-1.66 0-3-1.34-3-3 0-.78.31-1.48.82-2 .51-.52.82-1.22.82-2 0-1.66-1.34-3-3-3H2"/></svg>
+          Accent Color
+        </div>
+        <div class="color-presets" id="pomo-color-presets">
+          <button class="color-swatch chosen" data-hex="#fb923c" style="background:#fb923c" onclick="pomoSetColor(this)" title="Amber Orange"></button>
+          <button class="color-swatch" data-hex="#22d3a0" style="background:#22d3a0" onclick="pomoSetColor(this)" title="Teal"></button>
+          <button class="color-swatch" data-hex="#a78bfa" style="background:#a78bfa" onclick="pomoSetColor(this)" title="Lavender"></button>
+          <button class="color-swatch" data-hex="#38bdf8" style="background:#38bdf8" onclick="pomoSetColor(this)" title="Sky Blue"></button>
+          <button class="color-swatch" data-hex="#f472b6" style="background:#f472b6" onclick="pomoSetColor(this)" title="Pink"></button>
+          <button class="color-swatch" data-hex="#4ade80" style="background:#4ade80" onclick="pomoSetColor(this)" title="Lime Green"></button>
+          <button class="color-swatch" data-hex="#facc15" style="background:#facc15" onclick="pomoSetColor(this)" title="Yellow"></button>
+          <button class="color-swatch" data-hex="#ef4444" style="background:#ef4444" onclick="pomoSetColor(this)" title="Red"></button>
+          <button class="color-swatch" data-hex="#818cf8" style="background:#818cf8" onclick="pomoSetColor(this)" title="Indigo"></button>
+          <button class="color-swatch color-custom-btn" onclick="document.getElementById('pomo-custom-color').click()" title="Custom color">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <input type="color" id="pomo-custom-color" style="display:none;width:0;height:0;opacity:0;position:absolute" oninput="pomoSetCustomColor(this.value)"/>
+        </div>
+      </div>
+
+      <div class="pomo-divider"></div>
+
       <!-- Stats row -->
       <div class="pomo-stats-row">
         <div class="pomo-stat">
@@ -755,8 +814,133 @@ footer a{color:var(--ad);text-decoration:none}
 </div>
 
 <!-- PROGRESS TRACKER -->
-<div class="sec-hdr" id="progress-sec"><span class="sec-label">My Progress</span><div class="sec-line"></div></div>
-<div class="prog-box" style="animation:fu .5s .2s both">
+<div class="sec-hdr" id="progress-sec">
+  <span class="sec-label">Countdown Timer</span>
+  <div class="sec-line"></div>
+  <button class="hdr-fs-btn" onclick="ctFullscreen()" title="Fullscreen" aria-label="Fullscreen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+  </button>
+</div>
+<div class="ct-outer" id="ct-outer" style="animation:fu .5s .28s both">
+  <div class="ct-ambient" id="ct-ambient"></div>
+  <button class="pomo-exit-btn" id="ct-exit-btn" onclick="ctExitFs()" aria-label="Exit fullscreen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+    Exit
+  </button>
+  <div class="ct-inner">
+    <!-- LEFT -->
+    <div class="ct-left">
+      <!-- Big time display -->
+      <div class="ct-ring-wrap">
+        <svg class="pomo-svg" viewBox="0 0 120 120">
+          <circle class="pomo-track" cx="60" cy="60" r="52"/>
+          <circle class="pomo-prog" id="ct-ring" cx="60" cy="60" r="52"
+            stroke-dasharray="326.7" stroke-dashoffset="0"/>
+        </svg>
+        <div class="pomo-center">
+          <div class="ct-time" id="ct-time">00:00:00</div>
+          <div class="pomo-badge" id="ct-badge" style="color:#38bdf8">COUNTDOWN</div>
+        </div>
+      </div>
+      <!-- Controls -->
+      <div class="pomo-controls">
+        <button class="pomo-ctrl" onclick="ctReset()" title="Reset">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+        <button class="pomo-ctrl pomo-play" id="ct-play-btn" onclick="ctToggle()" style="background:#38bdf8;box-shadow:0 0 22px rgba(56 189 248/.45)">
+          <svg id="ct-play-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+        <button class="pomo-ctrl" onclick="ctAddMinute()" title="+1 min">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </button>
+      </div>
+      <div style="font-family:var(--fd);font-size:9px;letter-spacing:1px;color:var(--muted);text-align:center" id="ct-status">Set a time and press play</div>
+    </div>
+    <!-- RIGHT -->
+    <div class="pomo-right">
+      <!-- Time inputs -->
+      <div class="pomo-group">
+        <div class="pomo-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Set Timer
+        </div>
+        <div class="ct-inputs">
+          <div class="ct-input-wrap">
+            <div class="ct-input-label">HH</div>
+            <input class="ct-input" id="ct-h" type="number" min="0" max="99" value="0" placeholder="0" oninput="ctInputChanged()"/>
+          </div>
+          <div class="ct-colon">:</div>
+          <div class="ct-input-wrap">
+            <div class="ct-input-label">MM</div>
+            <input class="ct-input" id="ct-m" type="number" min="0" max="59" value="25" placeholder="25" oninput="ctInputChanged()"/>
+          </div>
+          <div class="ct-colon">:</div>
+          <div class="ct-input-wrap">
+            <div class="ct-input-label">SS</div>
+            <input class="ct-input" id="ct-s" type="number" min="0" max="59" value="0" placeholder="0" oninput="ctInputChanged()"/>
+          </div>
+        </div>
+        <!-- Quick presets -->
+        <div class="pomo-chips" id="ct-presets">
+          <button class="pomo-chip" onclick="ctPreset(0,5,0)">5 min</button>
+          <button class="pomo-chip" onclick="ctPreset(0,10,0)">10 min</button>
+          <button class="pomo-chip" onclick="ctPreset(0,25,0)">25 min</button>
+          <button class="pomo-chip" onclick="ctPreset(0,30,0)">30 min</button>
+          <button class="pomo-chip" onclick="ctPreset(1,0,0)">1 hour</button>
+          <button class="pomo-chip" onclick="ctPreset(1,30,0)">1.5 hr</button>
+          <button class="pomo-chip" onclick="ctPreset(2,0,0)">2 hours</button>
+        </div>
+      </div>
+
+      <div class="pomo-divider"></div>
+
+      <!-- Color picker -->
+      <div class="pomo-group">
+        <div class="pomo-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20c-1.66 0-3-1.34-3-3 0-.78.31-1.48.82-2 .51-.52.82-1.22.82-2 0-1.66-1.34-3-3-3H2"/></svg>
+          Accent Color
+        </div>
+        <div class="color-presets" id="ct-color-presets">
+          <button class="color-swatch" data-hex="#fb923c" style="background:#fb923c" onclick="ctSetColor(this)" title="Orange"></button>
+          <button class="color-swatch" data-hex="#22d3a0" style="background:#22d3a0" onclick="ctSetColor(this)" title="Teal"></button>
+          <button class="color-swatch" data-hex="#a78bfa" style="background:#a78bfa" onclick="ctSetColor(this)" title="Lavender"></button>
+          <button class="color-swatch chosen" data-hex="#38bdf8" style="background:#38bdf8" onclick="ctSetColor(this)" title="Sky Blue"></button>
+          <button class="color-swatch" data-hex="#f472b6" style="background:#f472b6" onclick="ctSetColor(this)" title="Pink"></button>
+          <button class="color-swatch" data-hex="#4ade80" style="background:#4ade80" onclick="ctSetColor(this)" title="Lime"></button>
+          <button class="color-swatch" data-hex="#facc15" style="background:#facc15" onclick="ctSetColor(this)" title="Yellow"></button>
+          <button class="color-swatch" data-hex="#ef4444" style="background:#ef4444" onclick="ctSetColor(this)" title="Red"></button>
+          <button class="color-swatch" data-hex="#818cf8" style="background:#818cf8" onclick="ctSetColor(this)" title="Indigo"></button>
+          <button class="color-swatch color-custom-btn" onclick="document.getElementById('ct-custom-color').click()" title="Custom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <input type="color" id="ct-custom-color" style="display:none;width:0;height:0;opacity:0;position:absolute" oninput="ctSetCustomColor(this.value)"/>
+        </div>
+      </div>
+
+      <div class="pomo-divider"></div>
+
+      <!-- Sound toggle & stats -->
+      <div class="pomo-group">
+        <div class="pomo-group-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Alert Sound
+        </div>
+        <div class="ct-sound-row">
+          <button class="sound-btn active" id="snd-chime" onclick="ctSetSound('chime',this)">🔔 Chime</button>
+          <button class="sound-btn" id="snd-bell"  onclick="ctSetSound('bell',this)">🛎 Bell</button>
+          <button class="sound-btn" id="snd-pulse" onclick="ctSetSound('pulse',this)">💓 Pulse</button>
+          <button class="sound-btn" id="snd-off"   onclick="ctSetSound('off',this)">🔇 Off</button>
+        </div>
+      </div>
+
+      <div class="pomo-tip-box" id="ct-tip">Set your time above and press ▶ to start. The timer will ring when done.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS TRACKER -->
+<div class="sec-hdr" id="real-progress-sec"><span class="sec-label">My Progress</span><div class="sec-line"></div></div>
+<div class="prog-box" style="animation:fu .5s .2s both" id="progress-sec">
   <div class="prog-title">📚 Tap to update your revision progress</div>
   <div class="prog-grid" id="prog-grid"></div>
 </div>
@@ -942,31 +1126,119 @@ function setPct(id,val,color){
   toast('✅ Saved!');
 }
 
+/* ── TAB TITLE UPDATER ── */
+const origTitle='Sec 3 Hub — Omar Ismail';
+function setTabTitle(str){document.title=str?str+' — Sec 3 Hub':origTitle;}
+
+/* ── SOUND ENGINE ── */
+function playSound(type){
+  try{
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    if(type==='chime'){
+      [[880,0,.12],[1100,.15,.15],[1320,.35,.2],[1760,.6,.3]].forEach(([f,t,d])=>{
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.connect(g);g.connect(ac.destination);
+        o.type='sine';o.frequency.value=f;
+        g.gain.setValueAtTime(0,ac.currentTime+t);
+        g.gain.linearRampToValueAtTime(.35,ac.currentTime+t+.02);
+        g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+d);
+        o.start(ac.currentTime+t);o.stop(ac.currentTime+t+d+.05);
+      });
+    } else if(type==='bell'){
+      const freqs=[440,880,660];
+      freqs.forEach((f,i)=>{
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.connect(g);g.connect(ac.destination);
+        o.type='triangle';o.frequency.value=f;
+        g.gain.setValueAtTime(.4,ac.currentTime+i*.25);
+        g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.25+.6);
+        o.start(ac.currentTime+i*.25);o.stop(ac.currentTime+i*.25+.65);
+      });
+    } else if(type==='pulse'){
+      for(let i=0;i<5;i++){
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.connect(g);g.connect(ac.destination);
+        o.type='square';o.frequency.value=660;
+        g.gain.setValueAtTime(.2,ac.currentTime+i*.15);
+        g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.15+.1);
+        o.start(ac.currentTime+i*.15);o.stop(ac.currentTime+i*.15+.15);
+      }
+    }
+  }catch(e){}
+}
+function beep(f=660,d=100){
+  try{
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ac.createOscillator(),g=ac.createGain();
+    o.connect(g);g.connect(ac.destination);
+    o.type='sine';o.frequency.value=f;
+    g.gain.setValueAtTime(.3,ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d/1000);
+    o.start();o.stop(ac.currentTime+d/1000+.02);
+  }catch(e){}
+}
+
+/* ── FULLSCREEN HELPERS ── */
+function enterFs(el){
+  if(el.requestFullscreen)el.requestFullscreen();
+  else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();
+  else el.classList.add('is-fs'); // fallback
+}
+function exitFs(){
+  if(document.exitFullscreen)document.exitFullscreen();
+  else if(document.webkitExitFullscreen)document.webkitExitFullscreen();
+  else{
+    document.getElementById('pomo-outer').classList.remove('is-fs');
+    document.getElementById('ct-outer').classList.remove('is-fs');
+  }
+}
+// Sync is-fs class with native fullscreen changes
+document.addEventListener('fullscreenchange',()=>{
+  const el=document.fullscreenElement;
+  ['pomo-outer','ct-outer'].forEach(id=>{
+    const e=document.getElementById(id);
+    if(e)e.classList.toggle('is-fs',e===el);
+  });
+  if(!el) setTabTitle('');
+});
+document.addEventListener('webkitfullscreenchange',()=>{
+  const el=document.webkitFullscreenElement;
+  ['pomo-outer','ct-outer'].forEach(id=>{
+    const e=document.getElementById(id);
+    if(e)e.classList.toggle('is-fs',e===el);
+  });
+  if(!el) setTabTitle('');
+});
+
+window.pomoFullscreen=function(){enterFs(document.getElementById('pomo-outer'))};
+window.pomoExitFs=exitFs;
+window.ctFullscreen=function(){enterFs(document.getElementById('ct-outer'))};
+window.ctExitFs=exitFs;
+
+/* ── HEX → RGB string helper ── */
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `${r} ${g} ${b}`;
+}
+
 /* ── POMODORO TIMER ── */
 (function(){
   const MODES={
-    focus:{label:'FOCUS',    color:'#fb923c',rgb:'251 146 60',glow:'rgba(251,146,60,.07)', tips:['Stay locked in. Deep focus builds momentum.','No distractions. This is your time.','Every minute counts. Keep going 💪']},
-    short:{label:'SHORT BRK',color:'#22d3a0',rgb:'34 211 160', glow:'rgba(34,211,160,.07)',  tips:['Breathe. Stretch. Reset your mind.','Take a quick walk or grab some water 💧','Rest is part of the process.']},
-    long: {label:'LONG BRK', color:'#a78bfa',rgb:'167 139 250',glow:'rgba(167,139,250,.07)', tips:['Well deserved. Relax completely 🌙','Hydrate and take a real break 🧃','You earned this. Come back refreshed.']},
+    focus:{label:'FOCUS',    color:'#fb923c',rgb:'251 146 60', glow:'rgba(251,146,60,.07)', tips:['Stay locked in. Deep focus builds momentum.','No distractions. This is your time.','Every minute counts. Keep going 💪']},
+    short:{label:'SHORT BRK',color:'#22d3a0',rgb:'34 211 160',  glow:'rgba(34,211,160,.07)',  tips:['Breathe. Stretch. Reset your mind.','Grab some water 💧','Rest is part of the process.']},
+    long: {label:'LONG BRK', color:'#a78bfa',rgb:'167 139 250', glow:'rgba(167,139,250,.07)', tips:['Well deserved. Relax completely 🌙','Hydrate and take a real break 🧃','You earned this. Come back refreshed.']},
   };
   const CIRC=326.7;
-
-  // per-mode durations (mins) — user-adjustable
-  const dur={focus:25, short:5, long:15};
-
-  let mode='focus';
-  let totalSecs=dur.focus*60;
-  let remaining=totalSecs;
-  let running=false;
-  let ivl=null;
+  const dur={focus:25,short:5,long:15};
+  let mode='focus',totalSecs=dur.focus*60,remaining=totalSecs;
+  let running=false,ivl=null;
   let sessions=parseInt(localStorage.getItem('ps')||'0');
   let focusMins=parseInt(localStorage.getItem('pfm')||'0');
   let streak=parseInt(localStorage.getItem('pstr')||'0');
-  let lastDate=localStorage.getItem('pdate')||'';
-
-  // reset streak if not today
   const today=new Date().toDateString();
-  if(lastDate&&lastDate!==today)streak=0;
+  if(localStorage.getItem('pdate')&&localStorage.getItem('pdate')!==today)streak=0;
+  // user chosen color (may override mode color)
+  let userColor=null;
 
   const timeEl=document.getElementById('pomo-time');
   const badgeEl=document.getElementById('pomo-badge');
@@ -980,140 +1252,253 @@ function setPct(id,val,color){
   const strkEl=document.getElementById('pomo-streak');
   const tipEl=document.getElementById('pomo-tip');
 
-  function applyTheme(m){
+  function getColor(){return userColor||MODES[mode].color;}
+  function getRgb(hex){return userColor?hexToRgb(userColor):MODES[mode].rgb;}
+
+  function applyTheme(m,forceColor){
     const c=MODES[m];
-    outerEl.style.setProperty('--pa',c.color);
-    outerEl.style.setProperty('--pa-rgb',c.rgb);
-    ambEl.style.background=c.glow;
-    ringEl.style.stroke=c.color;
-    ringEl.style.filter=`drop-shadow(0 0 8px ${c.color})`;
-    pbEl.style.background=c.color;
-    pbEl.style.boxShadow=`0 0 22px rgba(${c.rgb}/.45)`;
-    badgeEl.style.color=c.color;
+    const col=forceColor||userColor||c.color;
+    const rgb=forceColor?hexToRgb(forceColor):(userColor?hexToRgb(userColor):c.rgb);
+    const glow=forceColor||userColor?`rgba(${rgb}/.07)`:c.glow;
+    outerEl.style.setProperty('--pa',col);
+    outerEl.style.setProperty('--pa-rgb',rgb);
+    ambEl.style.background=glow;
+    ringEl.style.stroke=col;
+    ringEl.style.filter=`drop-shadow(0 0 8px ${col})`;
+    pbEl.style.background=col;
+    pbEl.style.boxShadow=`0 0 22px rgba(${rgb}/.45)`;
+    badgeEl.style.color=col;
     badgeEl.textContent=c.label;
-    tipEl.textContent=c.tips[Math.floor(Math.random()*c.tips.length)];
-    // update all chips in focus/short/long groups to match chosen color
-    document.querySelectorAll('.pomo-chip.chosen').forEach(ch=>{
-      ch.style.borderColor=c.color;ch.style.color=c.color;
-      ch.style.background=`rgba(${c.rgb}/.13)`;
-      ch.style.boxShadow=`0 0 10px rgba(${c.rgb}/.2)`;
+    if(!forceColor&&!userColor)tipEl.textContent=c.tips[Math.floor(Math.random()*c.tips.length)];
+    document.querySelectorAll('#pomo-color-presets .pomo-chip.chosen').forEach(ch=>{
+      ch.style.borderColor=col;ch.style.color=col;
+      ch.style.background=`rgba(${rgb}/.13)`;
     });
-    document.querySelectorAll('.pomo-dot').forEach(d=>d.style.setProperty('--pa',c.color));
+    document.querySelectorAll('.pomo-dot').forEach(d=>d.style.setProperty('--pa',col));
   }
 
   function renderTime(s){
     const m=Math.floor(s/60),sec=s%60;
     timeEl.textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+    if(running)setTabTitle(timeEl.textContent+' '+MODES[mode].label);
   }
-  function renderRing(s){
-    ringEl.style.strokeDashoffset=CIRC*(1-s/totalSecs);
-  }
-  function renderDots(){
-    for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('done',i<(sessions%4));
-  }
-  function renderStats(){
-    sessEl.textContent=sessions;
-    fmEl.textContent=focusMins;
-    strkEl.textContent=streak;
-  }
-  function beep(f=880,d=180,t='sine'){
-    try{
-      const ac=new(window.AudioContext||window.webkitAudioContext)();
-      const o=ac.createOscillator(),g=ac.createGain();
-      o.connect(g);g.connect(ac.destination);
-      o.frequency.value=f;o.type=t;
-      g.gain.setValueAtTime(.35,ac.currentTime);
-      g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d/1000);
-      o.start();o.stop(ac.currentTime+d/1000);
-    }catch(e){}
-  }
-  function setIcon(playing){
-    piEl.innerHTML=playing
-      ?'<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
-      :'<polygon points="5 3 19 12 5 21 5 3"/>';
+  function renderRing(s){ringEl.style.strokeDashoffset=CIRC*(1-s/totalSecs);}
+  function renderDots(){for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('done',i<(sessions%4));}
+  function renderStats(){sessEl.textContent=sessions;fmEl.textContent=focusMins;strkEl.textContent=streak;}
+  function setIcon(p){piEl.innerHTML=p?'<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>':'<polygon points="5 3 19 12 5 21 5 3"/>';}
+
+  function pomoDone(){
+    clearInterval(ivl);ivl=null;running=false;
+    outerEl.classList.remove('running');setIcon(false);
+    playSound('chime');
+    setTabTitle('✅ Done!');
+    setTimeout(()=>setTabTitle(''),3000);
+    if(mode==='focus'){
+      sessions++;focusMins+=Math.round(dur.focus);streak++;
+      localStorage.setItem('ps',sessions);localStorage.setItem('pfm',focusMins);
+      localStorage.setItem('pstr',streak);localStorage.setItem('pdate',today);
+      renderDots();renderStats();
+      toast('🎉 Focus session done! Great work!');
+      setTimeout(()=>pomoSetMode(document.querySelector('[data-mode="short"]')),900);
+    } else {
+      toast('✅ Break over — let\'s get back to it!');
+      setTimeout(()=>pomoSetMode(document.querySelector('[data-mode="focus"]')),900);
+    }
   }
 
   function tick(){
-    if(remaining<=0){
-      clearInterval(ivl);ivl=null;running=false;
-      outerEl.classList.remove('running');setIcon(false);
-      beep(660,120);setTimeout(()=>beep(880,160),200);setTimeout(()=>beep(1100,240),420);
-      if(mode==='focus'){
-        sessions++;
-        focusMins+=Math.round(dur.focus);
-        streak++;
-        localStorage.setItem('ps',sessions);
-        localStorage.setItem('pfm',focusMins);
-        localStorage.setItem('pstr',streak);
-        localStorage.setItem('pdate',today);
-        renderDots();renderStats();
-        toast('🎉 Focus session done! Great work!');
-        setTimeout(()=>pomoSetMode(document.querySelector('[data-mode="short"]')),900);
-      } else {
-        toast('✅ Break over — let\'s get back to it!');
-        setTimeout(()=>pomoSetMode(document.querySelector('[data-mode="focus"]')),900);
-      }
-      return;
-    }
+    if(remaining<=0){pomoDone();return;}
     remaining--;
-    renderTime(remaining);
-    renderRing(remaining);
+    renderTime(remaining);renderRing(remaining);
   }
 
   window.pomoToggle=function(){
-    if(running){
-      clearInterval(ivl);ivl=null;running=false;
-      outerEl.classList.remove('running');setIcon(false);beep(440,80);
-    } else {
-      running=true;outerEl.classList.add('running');setIcon(true);beep(660,100);
-      ivl=setInterval(tick,1000);
-    }
+    if(running){clearInterval(ivl);ivl=null;running=false;outerEl.classList.remove('running');setIcon(false);beep(440,80);setTabTitle('');}
+    else{running=true;outerEl.classList.add('running');setIcon(true);beep(660,100);ivl=setInterval(tick,1000);}
   };
-  window.pomoReset=function(){
-    clearInterval(ivl);ivl=null;running=false;
-    outerEl.classList.remove('running');setIcon(false);
-    remaining=totalSecs;renderTime(remaining);renderRing(remaining);beep(440,60);
-  };
-  window.pomoSkip=function(){
-    clearInterval(ivl);ivl=null;running=false;
-    outerEl.classList.remove('running');setIcon(false);
-    remaining=0;tick();
-  };
+  window.pomoReset=function(){clearInterval(ivl);ivl=null;running=false;outerEl.classList.remove('running');setIcon(false);remaining=totalSecs;renderTime(remaining);renderRing(remaining);beep(440,60);setTabTitle('');};
+  window.pomoSkip=function(){clearInterval(ivl);ivl=null;running=false;outerEl.classList.remove('running');setIcon(false);remaining=0;pomoDone();};
   window.pomoSetMode=function(btn){
-    clearInterval(ivl);ivl=null;running=false;
-    outerEl.classList.remove('running');setIcon(false);
+    clearInterval(ivl);ivl=null;running=false;outerEl.classList.remove('running');setIcon(false);
     document.querySelectorAll('.pomo-mode').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    mode=btn.dataset.mode;
-    totalSecs=dur[mode]*60;
-    remaining=totalSecs;
-    applyTheme(mode);
-    renderTime(remaining);renderRing(remaining);
+    btn.classList.add('active');mode=btn.dataset.mode;
+    totalSecs=dur[mode]*60;remaining=totalSecs;
+    applyTheme(mode);renderTime(remaining);renderRing(remaining);setTabTitle('');
   };
   window.pomoSetDur=function(modeKey,chip){
-    // update chosen chip in that group
     const group=document.getElementById(modeKey+'-chips');
-    group.querySelectorAll('.pomo-chip').forEach(c=>{
-      c.classList.remove('chosen');
-      c.style.cssText='';
-    });
+    group.querySelectorAll('.pomo-chip').forEach(c=>{c.classList.remove('chosen');c.style.cssText='';});
     chip.classList.add('chosen');
-    const cfg=MODES[mode];
-    chip.style.borderColor=cfg.color;chip.style.color=cfg.color;
-    chip.style.background=`rgba(${cfg.rgb}/.13)`;
-    chip.style.boxShadow=`0 0 10px rgba(${cfg.rgb}/.2)`;
+    const col=getColor(),rgb=getRgb();
+    chip.style.borderColor=col;chip.style.color=col;
+    chip.style.background=`rgba(${rgb}/.13)`;
     dur[modeKey]=parseInt(chip.dataset.mins);
-    // if currently in that mode, update timer
-    if(mode===modeKey&&!running){
-      totalSecs=dur[modeKey]*60;
-      remaining=totalSecs;
-      renderTime(remaining);renderRing(remaining);
-    }
+    if(mode===modeKey&&!running){totalSecs=dur[modeKey]*60;remaining=totalSecs;renderTime(remaining);renderRing(remaining);}
     toast(`⏱ ${modeKey==='focus'?'Focus':'Break'} set to ${chip.dataset.mins} min`);
+  };
+  window.pomoSetColor=function(swatch){
+    userColor=swatch.dataset.hex;
+    document.querySelectorAll('#pomo-color-presets .color-swatch').forEach(s=>s.classList.remove('chosen'));
+    swatch.classList.add('chosen');
+    applyTheme(mode,userColor);
+    toast('🎨 Color updated!');
+  };
+  window.pomoSetCustomColor=function(hex){
+    userColor=hex;
+    document.querySelectorAll('#pomo-color-presets .color-swatch').forEach(s=>s.classList.remove('chosen'));
+    applyTheme(mode,hex);toast('🎨 Custom color set!');
+  };
+
+  renderStats();applyTheme('focus');renderTime(remaining);renderRing(remaining);renderDots();
+})();
+
+/* ── COUNTDOWN TIMER ── */
+(function(){
+  const CIRC=326.7;
+  let ctColor='#38bdf8',ctRgb='56 189 248';
+  let totalSecs=0,remaining=0,running=false,ivl=null;
+  let soundType='chime';
+
+  const ctRingEl=document.getElementById('ct-ring');
+  const ctTimeEl=document.getElementById('ct-time');
+  const ctBadgeEl=document.getElementById('ct-badge');
+  const ctPlayBtn=document.getElementById('ct-play-btn');
+  const ctPlayIcon=document.getElementById('ct-play-icon');
+  const ctAmbEl=document.getElementById('ct-ambient');
+  const ctOuterEl=document.getElementById('ct-outer');
+  const ctStatusEl=document.getElementById('ct-status');
+
+  function applyCtTheme(hex){
+    ctRgb=hexToRgb(hex);
+    ctRingEl.style.stroke=hex;
+    ctRingEl.style.filter=`drop-shadow(0 0 8px ${hex})`;
+    ctPlayBtn.style.background=hex;
+    ctPlayBtn.style.boxShadow=`0 0 22px rgba(${ctRgb}/.45)`;
+    ctBadgeEl.style.color=hex;
+    ctAmbEl.style.background=`rgba(${ctRgb}/.07)`;
+    ctOuterEl.style.setProperty('--ct-color',hex);
+    ctOuterEl.style.setProperty('--ct-rgb',ctRgb);
+    // update sound btn active color
+    document.querySelectorAll('.sound-btn.active').forEach(b=>{
+      b.style.borderColor=hex;b.style.color=hex;b.style.background=`rgba(${ctRgb}/.13)`;
+    });
+    // update chosen chip
+    document.querySelectorAll('#ct-presets .pomo-chip.chosen').forEach(c=>{
+      c.style.borderColor=hex;c.style.color=hex;c.style.background=`rgba(${ctRgb}/.13)`;
+    });
+  }
+
+  function getInputSecs(){
+    const h=parseInt(document.getElementById('ct-h').value)||0;
+    const m=parseInt(document.getElementById('ct-m').value)||0;
+    const s=parseInt(document.getElementById('ct-s').value)||0;
+    return h*3600+m*60+s;
+  }
+  function setInputsFromSecs(s){
+    document.getElementById('ct-h').value=Math.floor(s/3600);
+    document.getElementById('ct-m').value=Math.floor((s%3600)/60);
+    document.getElementById('ct-s').value=s%60;
+  }
+  function fmtTime(s){
+    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+    if(h>0)return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+    return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+  }
+  function renderCtTime(s){
+    ctTimeEl.textContent=fmtTime(s);
+    if(running)setTabTitle(fmtTime(s)+' ⏱');
+  }
+  function renderCtRing(s){
+    if(totalSecs===0){ctRingEl.style.strokeDashoffset=0;return;}
+    ctRingEl.style.strokeDashoffset=CIRC*(1-s/totalSecs);
+  }
+  function setCtIcon(p){ctPlayIcon.innerHTML=p?'<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>':'<polygon points="5 3 19 12 5 21 5 3"/>';}
+
+  function ctDone(){
+    clearInterval(ivl);ivl=null;running=false;
+    ctOuterEl.classList.remove('running');setCtIcon(false);
+    if(soundType!=='off')playSound(soundType);
+    setTabTitle('⏰ Time\'s up!');setTimeout(()=>setTabTitle(''),4000);
+    ctStatusEl.textContent='⏰ Time\'s up!';
+    toast('⏰ Countdown finished!');
+    renderCtTime(0);renderCtRing(0);
+  }
+
+  function ctTick(){
+    if(remaining<=0){ctDone();return;}
+    remaining--;
+    renderCtTime(remaining);renderCtRing(remaining);
+    if(remaining<=10&&remaining>0)beep(880,80); // last 10s tick
+  }
+
+  window.ctToggle=function(){
+    if(running){
+      clearInterval(ivl);ivl=null;running=false;
+      ctOuterEl.classList.remove('running');setCtIcon(false);beep(440,80);setTabTitle('');
+    } else {
+      if(!running&&remaining===0){
+        totalSecs=getInputSecs();
+        if(totalSecs<=0){toast('⚠ Set a time first!');return;}
+        remaining=totalSecs;
+      }
+      running=true;ctOuterEl.classList.add('running');setCtIcon(true);beep(660,100);
+      ctStatusEl.textContent='Running…';
+      ivl=setInterval(ctTick,1000);
+    }
+  };
+  window.ctReset=function(){
+    clearInterval(ivl);ivl=null;running=false;
+    ctOuterEl.classList.remove('running');setCtIcon(false);
+    totalSecs=getInputSecs();remaining=totalSecs;
+    renderCtTime(remaining);renderCtRing(remaining);
+    ctStatusEl.textContent='Set a time and press play';setTabTitle('');beep(440,60);
+  };
+  window.ctAddMinute=function(){
+    if(!running){totalSecs=Math.max(0,totalSecs+60);remaining=totalSecs;setInputsFromSecs(totalSecs);renderCtTime(remaining);renderCtRing(remaining);}
+    else{remaining+=60;totalSecs+=60;renderCtTime(remaining);renderCtRing(remaining);}
+    toast('+1 minute added');
+  };
+  window.ctPreset=function(h,m,s){
+    clearInterval(ivl);ivl=null;running=false;ctOuterEl.classList.remove('running');setCtIcon(false);setTabTitle('');
+    totalSecs=h*3600+m*60+s;remaining=totalSecs;
+    setInputsFromSecs(totalSecs);renderCtTime(remaining);renderCtRing(remaining);
+    ctStatusEl.textContent='Ready — press ▶ to start';
+    // mark chosen chip
+    document.querySelectorAll('#ct-presets .pomo-chip').forEach(c=>{ c.classList.remove('chosen');c.style.cssText=''; });
+    const matched=[...document.querySelectorAll('#ct-presets .pomo-chip')].find(c=>c.textContent.trim()===fmtPresetLabel(h,m,s));
+    if(matched){matched.classList.add('chosen');matched.style.borderColor=ctColor;matched.style.color=ctColor;matched.style.background=`rgba(${ctRgb}/.13)`;}
+    beep(660,80);
+  };
+  function fmtPresetLabel(h,m,s){
+    if(h===0)return m+' min';
+    if(m===0)return h+' hour'+(h>1?'s':'');
+    return h+(m===30?'.5':'')+' hr';
+  }
+  window.ctInputChanged=function(){
+    if(!running){totalSecs=getInputSecs();remaining=totalSecs;renderCtTime(remaining);renderCtRing(remaining);}
+  };
+  window.ctSetColor=function(swatch){
+    ctColor=swatch.dataset.hex;
+    document.querySelectorAll('#ct-color-presets .color-swatch').forEach(s=>s.classList.remove('chosen'));
+    swatch.classList.add('chosen');
+    applyCtTheme(ctColor);toast('🎨 Color updated!');
+  };
+  window.ctSetCustomColor=function(hex){
+    ctColor=hex;
+    document.querySelectorAll('#ct-color-presets .color-swatch').forEach(s=>s.classList.remove('chosen'));
+    applyCtTheme(hex);toast('🎨 Custom color set!');
+  };
+  window.ctSetSound=function(type,btn){
+    soundType=type;
+    document.querySelectorAll('.sound-btn').forEach(b=>{b.classList.remove('active');b.style.cssText='';});
+    btn.classList.add('active');
+    btn.style.borderColor=ctColor;btn.style.color=ctColor;btn.style.background=`rgba(${ctRgb}/.13)`;
+    if(type!=='off')playSound(type);
+    toast('🔔 Sound: '+btn.textContent.trim());
   };
 
   // init
-  renderStats();applyTheme('focus');renderTime(remaining);renderRing(remaining);renderDots();
+  applyCtTheme(ctColor);renderCtTime(0);renderCtRing(0);
 })();
 
 /* ── DINO GAME ── */
