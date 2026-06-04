@@ -69,6 +69,7 @@ h1 .sub{display:block;font-size:clamp(9px,2.2vw,13px);letter-spacing:3px;color:v
 .filter-btn[data-f="organic"].active{border-color:var(--ao);color:var(--ao);background:rgba(167,139,250,.07)}
 .filter-btn[data-f="physics"].active{border-color:var(--ap);color:var(--ap);background:rgba(56,189,248,.07)}
 .filter-btn[data-f="tools"].active{border-color:var(--at);color:var(--at);background:rgba(251,146,60,.07)}
+.filter-btn[data-f="tools"]:hover{border-color:var(--at);color:var(--at)}
 
 /* ─── STATS ─── */
 .stats{display:flex;justify-content:center;gap:20px;margin-top:28px;animation:fd .6s .4s both;flex-wrap:wrap}
@@ -477,6 +478,24 @@ footer a{color:var(--ad);text-decoration:none}
 .ct-outer:fullscreen .pomo-play svg,.ct-outer:-webkit-full-screen .pomo-play svg,.ct-outer.is-fs .pomo-play svg{width:28px!important;height:28px!important}
 .ct-outer:fullscreen .ct-ambient,.ct-outer:-webkit-full-screen .ct-ambient,.ct-outer.is-fs .ct-ambient{width:900px!important;height:900px!important}
 
+/* ─── NEW BADGE ─── */
+.card-new-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:100px;
+  font-family:var(--fd);font-size:8px;letter-spacing:1.5px;font-weight:700;
+  background:linear-gradient(135deg,#22d3a0,#38bdf8);
+  color:#000;text-transform:uppercase;
+  box-shadow:0 0 10px rgba(34,211,160,.4);
+  animation:new-pulse 2.5s ease-in-out infinite;
+}
+@keyframes new-pulse{0%,100%{box-shadow:0 0 10px rgba(34,211,160,.4)}50%{box-shadow:0 0 18px rgba(56,189,248,.7)}}
+.card-meta-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+
+/* ─── TOOLS CARDS ─── */
+.card[data-cat="tools"]{--ca:var(--at);--cg:var(--gt)}
+.card[data-cat="timetools"]{--ca:#f472b6;--cg:rgba(244,114,182,.18)}
+.card[data-cat="timetools"] .card-tag{color:#f472b6;border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.07)}
+
 /* ─── ANIMATIONS ─── */
 @keyframes fd{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -523,9 +542,9 @@ footer a{color:var(--ad);text-decoration:none}
       <button class="filter-btn" data-f="tools">Tools</button>
     </div>
     <div class="stats">
-      <div class="stat-item"><div class="stat-num" id="cnt">7</div><div class="stat-label">Resources</div></div>
+      <div class="stat-item"><div class="stat-num" id="cnt">10</div><div class="stat-label">Resources</div></div>
       <div class="stat-div"></div>
-      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Subjects</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Subjects</div></div>
       <div class="stat-div"></div>
       <div class="stat-item"><div class="stat-num" id="visit-cnt">1</div><div class="stat-label">Visits</div></div>
       <div class="stat-div"></div>
@@ -628,8 +647,8 @@ footer a{color:var(--ad);text-decoration:none}
 
 </div>
 
-<!-- PHYSICS & TOOLS -->
-<div class="sec-hdr" id="phys-sec"><span class="sec-label">Physics &amp; Tools</span><div class="sec-line"></div></div>
+<!-- PHYSICS -->
+<div class="sec-hdr" id="phys-sec"><span class="sec-label">Physics</span><div class="sec-line"></div></div>
 <div class="grid" id="grid2">
 
   <a class="card" data-cat="physics"
@@ -637,7 +656,7 @@ footer a{color:var(--ad);text-decoration:none}
      target="_blank" rel="noopener" data-search="physics forces motion energy waves electricity">
     <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ap)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
     <div class="card-info">
-      <div style="margin-bottom:6px"><span class="card-tag">Physics</span></div>
+      <div class="card-meta-row"><span class="card-tag">Physics</span></div>
       <div class="card-title">Physics — Full Resource</div>
       <div class="card-desc">Forces, motion, energy, waves, and electricity for Sec 3.</div>
     </div>
@@ -647,6 +666,84 @@ footer a{color:var(--ad);text-decoration:none}
     </div>
   </a>
 
+  <a class="card" data-cat="physics"
+     href="https://omarmohamedismail.github.io/modern-physics/"
+     target="_blank" rel="noopener" data-search="modern physics quantum relativity atomic nuclear photoelectric">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--ap)" stroke-width="1.5">
+        <circle cx="12" cy="12" r="2"/>
+        <path d="M12 2a10 10 0 0 1 0 20"/>
+        <path d="M12 2a10 10 0 0 0 0 20"/>
+        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/>
+        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <div class="card-meta-row">
+        <span class="card-tag">Physics</span>
+        <span class="card-new-badge">✦ NEW</span>
+      </div>
+      <div class="card-title">Modern Physics</div>
+      <div class="card-desc">Quantum mechanics, relativity, atomic & nuclear physics — the cutting-edge curriculum.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+</div>
+
+<!-- TOOLS -->
+<div class="sec-hdr" id="tools-sec"><span class="sec-label">Tools</span><div class="sec-line"></div></div>
+<div class="grid" id="grid3">
+
+  <a class="card" data-cat="tools"
+     href="https://omarmohamedismail.github.io/pomodoro-timer-study/"
+     target="_blank" rel="noopener" data-search="pomodoro timer study focus productivity sessions">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--at)" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+        <path d="M9 2h6"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <div class="card-meta-row">
+        <span class="card-tag">Tools</span>
+        <span class="card-new-badge">✦ NEW</span>
+      </div>
+      <div class="card-title">Pomodoro Timer — Study</div>
+      <div class="card-desc">Advanced study Pomodoro with session tracking, streaks, and focus analytics.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
+
+  <a class="card" data-cat="tools"
+     href="https://omarmohamedismail.github.io/time_lock-omar/"
+     target="_blank" rel="noopener" data-search="time lock blocker focus distraction website block timer">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--at)" stroke-width="1.5">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+    <div class="card-info">
+      <div class="card-meta-row">
+        <span class="card-tag">Tools</span>
+        <span class="card-new-badge">✦ NEW</span>
+      </div>
+      <div class="card-title">Time Lock</div>
+      <div class="card-desc">Lock your time and block distractions. Stay disciplined and own your study sessions.</div>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">OPEN</span>
+      <div class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+    </div>
+  </a>
 
 </div>
 
@@ -984,7 +1081,7 @@ footer a{color:var(--ad);text-decoration:none}
   </div>
   <div class="dev-body">
     <div class="dev-stats">
-      <div><div class="dev-stat-n">7</div><div class="dev-stat-l">Projects</div></div>
+      <div><div class="dev-stat-n">10</div><div class="dev-stat-l">Projects</div></div>
       <div><div class="dev-stat-n">3</div><div class="dev-stat-l">Subjects</div></div>
       <div><div class="dev-stat-n" id="dino-best-dev">0</div><div class="dev-stat-l">Dino PB</div></div>
     </div>
@@ -1014,17 +1111,17 @@ footer a{color:var(--ad);text-decoration:none}
     <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></div>
     <span class="bnav-label">Chem</span>
   </div>
+  <div class="bnav-item" onclick="bnavGo('phys-sec','phys-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+    <span class="bnav-label">Physics</span>
+  </div>
+  <div class="bnav-item" onclick="bnavGo('tools-sec','tools-nav')">
+    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+    <span class="bnav-label">Tools</span>
+  </div>
   <div class="bnav-item" onclick="bnavGo('pomo-anchor','pomo-nav')">
     <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><path d="M9 2h6"/></svg></div>
     <span class="bnav-label">Focus</span>
-  </div>
-  <div class="bnav-item" onclick="bnavGo('dino-anchor','dino-nav')">
-    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-    <span class="bnav-label">Dino</span>
-  </div>
-  <div class="bnav-item" onclick="bnavGo('dev-sec','dev-nav')">
-    <div class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-    <span class="bnav-label">Dev</span>
   </div>
 </nav>
 
